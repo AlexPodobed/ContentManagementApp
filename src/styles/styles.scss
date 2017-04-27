@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap.scss";
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+@import 'variables';
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 80px;
+}

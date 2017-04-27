@@ -1,0 +1,17 @@
+<nav class="navbar navbar-inverse bg-inverse navbar-toggleable-sm">
+    <button class="navbar-toggler navbar-toggler-right"
+            (click)="toggleMenu()"
+            type="button"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" [routerLink]="''">
+        <app-logo></app-logo>
+    </a>
+
+    <nav-menu [user]="user$ | async"
+              (logout)="onLogout($event)"
+              [opened]="opened">
+    </nav-menu>
+</nav>
