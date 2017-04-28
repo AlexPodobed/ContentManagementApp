@@ -1,0 +1,34 @@
+<article class="row">
+    <section class="col-md-6">
+        <div class="form-group">
+            <label>Tooltip Text:</label>
+            <input type="text" class="form-control"  [(ngModel)]="customImage.tooltip.text" placeholder="Put tooltip text here">
+        </div>
+        <sh-image-uploader (onSuccessUpload)="goToTooltipSetup($event)"></sh-image-uploader>
+    </section>
+    <section class="col-md-6">
+        <div class="card card-inverse card-info mb-3 text-center">
+            <div class="p-3">
+                <blockquote class="card-blockquote">
+                    <p class="m-0">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        Click on the Image to choose the pointer for tooltip
+                    </p>
+                </blockquote>
+            </div>
+        </div>
+        <div class="image-wrapper">
+            <image-with-tooltip [item]="customImage"
+                                [showPointer]="true"
+                                (click)="addPointer($event)">
+            </image-with-tooltip>
+        </div>
+    </section>
+
+   <section class="col-12">
+       <br>
+       <code>
+           {{customImage | json}}
+       </code>
+   </section>
+</article>

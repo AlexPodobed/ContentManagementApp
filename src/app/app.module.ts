@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 // features
 import { LoginModule } from './features/login';
 import { HomeComponent } from './features/home';
+import { CustomImagesModule } from './features/custom-images';
 // components
 import { NoContentComponent } from './features/no-content';
 import { AppComponent } from './app.component';
@@ -25,9 +26,12 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserModule,
         RouterModule.forRoot(ROUTES, { useHash: false }),
+        // modules
         CoreModule,
         SharedModule,
-        LoginModule
+        // features
+        LoginModule,
+        CustomImagesModule
     ],
     providers: [
         ENV_PROVIDERS

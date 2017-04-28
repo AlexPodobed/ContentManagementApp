@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -8,6 +8,8 @@ import {
 } from './services';
 
 import { PipesModule } from './pipes';
+
+import { throwIfAlreadyLoaded } from './module-import-guard';
 
 @NgModule({
     declarations: [],
@@ -38,4 +40,7 @@ import { PipesModule } from './pipes';
 })
 
 export class CoreModule {
+    constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    }
 }

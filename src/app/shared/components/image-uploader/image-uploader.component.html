@@ -1,0 +1,20 @@
+<div *ngIf="!uploader.queue.length">
+    <div class="card" [ngClass]="{'card-info': hasBaseDropZoneOver}">
+        <div ng2FileDrop
+             (fileOver)="fileOverBase($event)"
+             [uploader]="uploader"
+             class="card-block my-drop-zone">
+            Base drop zone
+        </div>
+    </div>
+    <input type="file" ng2FileSelect [uploader]="uploader" accept="image/*"/>
+
+</div>
+<div *ngIf="uploader.queue.length">
+    Selected file:
+    <p *ngFor="let item of uploader.queue">
+        <strong>{{item.file.name}}</strong>
+    </p>
+    <button class="btn btn-outline-primary" (click)="upload()">Upload</button>
+</div>
+
