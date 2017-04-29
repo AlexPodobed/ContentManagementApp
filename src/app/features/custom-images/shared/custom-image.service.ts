@@ -25,8 +25,7 @@ export class CustomImageService {
 
     getAll(): Observable<CustomImage[]> {
         return this.http.get(CustomImageService.BASE_URL)
-            .map((res: Response) => res.json())
-            .retry(2);
+            .map((res: Response) => res.json());
     }
 
     get(id: string): Observable<CustomImage> {

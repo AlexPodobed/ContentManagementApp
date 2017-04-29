@@ -1,8 +1,9 @@
 <article class="row" *ngIf="customImage">
-    <section class="col-md-6">
+    <section class="col-md-4">
         <div class="form-group">
             <label>Tooltip Text:</label>
-            <input type="text" class="form-control" [(ngModel)]="customImage.tooltip.text"
+            <input type="text" class="form-control"
+                   [(ngModel)]="customImage.tooltip.text"
                    placeholder="Put tooltip text here">
         </div>
         <div class="form-group">
@@ -15,7 +16,7 @@
             </div>
         </div>
     </section>
-    <section class="col-md-6" *ngIf="customImage.src">
+    <section class="col-md-8" *ngIf="customImage.src">
         <div class="card card-inverse card-info mb-3 text-center">
             <div class="p-3">
                 <blockquote class="card-blockquote">
@@ -35,17 +36,7 @@
     </section>
 
     <section class="col-12 mt-3">
-        <button type="button" class="btn btn-primary"
-                (click)="save()"
-                [disabled]="isDisabled()">
-            Submit
-        </button>
+        <button type="button" class="btn btn-primary" (click)="save()" [disabled]="isDisabled()">Submit</button>
         <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-    </section>
-    <section class="col-12">
-        <br>
-        <code>
-            {{customImage | json}}
-        </code>
     </section>
 </article>

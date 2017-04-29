@@ -1,13 +1,6 @@
 <div class="image-with-tooltip" [ngClass]="{'image-with-tooltip__always-show': showPointer}">
-    <img class="card-img-top w-100" src="{{item.src}}" usemap="#image">
+    <img class="card-img-top" src="{{item.src}}">
     <span class="image-with-tooltip__pointer" [tooltipPosition]="item.tooltip.position">
-        <!--<span class="image-with-tooltip__tooltip-text"></span>-->
-
-        <!-- TODO: write separate component for tooltip-->
-        <div class="tooltip image-with-tooltip__tooltip-text">
-            <div class="tooltip-inner">
-              {{item.tooltip.text}}
-            </div>
-          </div>
+        <sh-tooltip [text]="item.tooltip.text"></sh-tooltip>
     </span>
 </div>

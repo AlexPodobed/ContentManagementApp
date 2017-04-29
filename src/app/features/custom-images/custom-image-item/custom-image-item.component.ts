@@ -11,13 +11,7 @@ export class CustomImageItemComponent {
     @Input() public item: CustomImage;
     @Output() public onRemove = new EventEmitter<CustomImage>();
 
-    public showTooltip: boolean = false;
-
     public remove(): void {
         this.onRemove.emit(this.item);
-    }
-
-    public toggleTooltip(): void {
-        this.showTooltip = !this.showTooltip;
     }
 }

@@ -31,8 +31,11 @@ export class CustomImagesContainerComponent implements OnInit, OnDestroy {
     public fetchImages(): void {
         this.loaderBlockService.show();
         this.customImages$ = this.customImageService.getAll()
-            .do(() => this.loaderBlockService.hide());
-
+            .do(() => this.loaderBlockService.hide())
+            .catch((e) => {
+                this.loaderBlockService.hide();
+                return e;
+            });
     }
 
     public remove(customImage: CustomImage): void {

@@ -1,10 +1,10 @@
 <div class="card mb-3">
-    <image-with-tooltip [item]="item" [showPointer]="showTooltip"></image-with-tooltip>
+    <img src="{{item.src}}" class="mw-100">
     <div class="card-block">
         <button class="btn btn-secondary"
                 title="remove image"
                 (click)="remove()">
-            <i class="fa fa-minus" aria-hidden="true"></i>
+            <i class="fa fa-times" aria-hidden="true"></i>
         </button>
         <button class="btn btn-secondary"
                 title="edit image"
@@ -12,9 +12,9 @@
             <i class="fa fa-pencil" aria-hidden="true"></i>
         </button>
         <button class="btn btn-secondary"
-                title="show/hide tooltip"
-                (click)="toggleTooltip()">
-            <i class="fa fa-eye{{showTooltip ? '-slash' : ''}}" aria-hidden="true"></i>
+                title="image details"
+                [routerLink]="['/custom-images', item.id]">
+            <i class="fa fa-eye" aria-hidden="true"></i>
         </button>
     </div>
 </div>

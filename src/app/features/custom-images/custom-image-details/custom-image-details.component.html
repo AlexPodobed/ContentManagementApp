@@ -1,0 +1,10 @@
+<section *ngIf="customImage">
+    <button class="btn btn-secondary mb-3"
+            title="show/hide tooltip"
+            (click)="toggleTooltip()">
+        {{showTooltip ? 'hide' : 'show'}} tooltip
+    </button>
+    <image-with-tooltip [item]="customImage" [showPointer]="showTooltip"></image-with-tooltip>
+</section>
+
+

@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
-import { NoResultModule } from './no-results';
 
 import { ImageUploaderModule } from './image-uploader';
+import { NoResultModule } from './no-results';
+import { TooltipModule } from './tooltip';
 
 @NgModule({
     imports: [
+        ImageUploaderModule,
         NoResultModule,
-        ImageUploaderModule
+        TooltipModule
     ],
     exports: [
+        ImageUploaderModule,
         NoResultModule,
-        ImageUploaderModule
+        TooltipModule
     ]
 })
 
