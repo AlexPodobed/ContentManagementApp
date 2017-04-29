@@ -3,8 +3,9 @@
         <h3>Content Management Container</h3>
     </section>
     <section class="row">
-        <custom-image-item *ngFor="let image of customImages | async"
+        <custom-image-item *ngFor="let image of customImages$ | async"
                            [item]="image"
+                           (onRemove)="remove($event)"
                            class="col-12 col-md-6 col-lg-4">
         </custom-image-item>
     </section>

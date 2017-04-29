@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { CustomImageService, CustomImage } from '../shared';
+import { LoaderBlockService } from '../../../core/services';
 
 @Component({
     selector: 'custom-images-container',
@@ -9,14 +11,40 @@ import { CustomImageService, CustomImage } from '../shared';
     styles: [require('./custom-images-container.scss')],
     templateUrl: './custom-images-container.component.html'
 })
-export class CustomImagesContainerComponent implements OnInit {
-    public customImages: Observable<CustomImage[]>;
+export class CustomImagesContainerComponent implements OnInit, OnDestroy {
+    private subscriptions: Subscription[] = [];
+    public customImages$: Observable<CustomImage[]>;
 
-    constructor(private customImageService: CustomImageService) {
-        console.log('1111111111');
+    constructor(private customImageService: CustomImageService,
+                private loaderBlockService: LoaderBlockService,
+                private cd: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
-        this.customImages = this.customImageService.getAll();
+        this.fetchImages();
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.map((sub) => sub.unsubscribe());
+    }
+
+    public fetchImages(): void {
+        this.loaderBlockService.show();
+        this.customImages$ = this.customImageService.getAll()
+            .do(() => this.loaderBlockService.hide());
+
+    }
+
+    public remove(customImage: CustomImage): void {
+        if (window.confirm('are you sure')) {
+            this.subscriptions.push(
+                this.customImageService.remove(customImage.id)
+                    .do(() => {
+                        this.cd.markForCheck();
+                        this.fetchImages();
+                    })
+                    .subscribe()
+            );
+        }
     }
 }

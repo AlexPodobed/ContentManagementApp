@@ -5,7 +5,6 @@ import { Ng2CloudinaryModule } from 'ng2-cloudinary';
 
 import { ImageUploaderComponent } from './image-uploader.component';
 
-
 @NgModule({
     declarations: [ImageUploaderComponent],
     imports: [

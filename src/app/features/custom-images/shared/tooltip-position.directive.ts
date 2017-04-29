@@ -18,7 +18,6 @@ export class TooltipPositionDirective implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes['position'].isFirstChange()) {
-            console.log('changed')
             this.setElementPosition(changes['position'].currentValue);
         }
     }

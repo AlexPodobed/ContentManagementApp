@@ -9,7 +9,6 @@ import { CustomImageSetupComponent } from './custom-image-setup/custom-image-set
 import { CustomTooltipSetupComponent } from './custom-tooltip-setup/custom-tooltip-setup.component';
 import { ImageWithTooltipModule } from '../shared';
 
-
 @NgModule({
     declarations: [
         CustomImageFormComponent,

@@ -31,7 +31,7 @@ export class LoginFormComponent implements OnDestroy {
 
     public onSuccess(): void {
         this.loaderBlockService.hide();
-        this.router.navigate(['/courses']);
+        this.router.navigate(['/custom-images']);
     }
 
     public login(): void {

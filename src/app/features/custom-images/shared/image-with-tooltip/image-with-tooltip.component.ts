@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CustomImage } from '../custom-image.model';
 
 @Component({
@@ -6,11 +6,7 @@ import { CustomImage } from '../custom-image.model';
     styles: [require('./image-with-tooltip.component.scss')],
     templateUrl: './image-with-tooltip.component.html'
 })
-export class ImageWithTooltipComponent implements OnChanges {
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes)
-    }
-
+export class ImageWithTooltipComponent {
     @Input() public item: CustomImage;
     @Input() public showPointer: boolean = false;
 }

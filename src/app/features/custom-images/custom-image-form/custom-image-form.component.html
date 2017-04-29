@@ -1,12 +1,21 @@
-<article class="row">
+<article class="row" *ngIf="customImage">
     <section class="col-md-6">
         <div class="form-group">
             <label>Tooltip Text:</label>
-            <input type="text" class="form-control"  [(ngModel)]="customImage.tooltip.text" placeholder="Put tooltip text here">
+            <input type="text" class="form-control" [(ngModel)]="customImage.tooltip.text"
+                   placeholder="Put tooltip text here">
         </div>
-        <sh-image-uploader (onSuccessUpload)="goToTooltipSetup($event)"></sh-image-uploader>
+        <div class="form-group">
+            <label>Image:</label>
+            <div *ngIf="!customImage.src">
+                <sh-image-uploader (onSuccessUpload)="updateImageSrc($event)"></sh-image-uploader>
+            </div>
+            <div *ngIf="customImage.src">
+                <button class="btn btn-outline-success" (click)="updateImageSrc('')">change</button>
+            </div>
+        </div>
     </section>
-    <section class="col-md-6">
+    <section class="col-md-6" *ngIf="customImage.src">
         <div class="card card-inverse card-info mb-3 text-center">
             <div class="p-3">
                 <blockquote class="card-blockquote">
@@ -20,15 +29,23 @@
         <div class="image-wrapper">
             <image-with-tooltip [item]="customImage"
                                 [showPointer]="true"
-                                (click)="addPointer($event)">
+                                (click)="changeTooltipPosition($event)">
             </image-with-tooltip>
         </div>
     </section>
 
-   <section class="col-12">
-       <br>
-       <code>
-           {{customImage | json}}
-       </code>
-   </section>
+    <section class="col-12 mt-3">
+        <button type="button" class="btn btn-primary"
+                (click)="save()"
+                [disabled]="isDisabled()">
+            Submit
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </section>
+    <section class="col-12">
+        <br>
+        <code>
+            {{customImage | json}}
+        </code>
+    </section>
 </article>

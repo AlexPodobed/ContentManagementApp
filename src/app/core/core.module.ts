@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 
 import { LoaderBlockModule, FooterModule, HeaderModule, LogoModule } from './components';
 import {
-    LoaderBlockService, AuthService, StorageService, AuthorizedHttp
+    LoaderBlockService, AuthService, StorageService, AuthorizedHttp, AuthGuard
 } from './services';
 
 import { PipesModule } from './pipes';
@@ -24,6 +24,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
     ],
     providers: [
         AuthService,
+        AuthGuard,
         StorageService,
         AuthorizedHttp,
         LoaderBlockService

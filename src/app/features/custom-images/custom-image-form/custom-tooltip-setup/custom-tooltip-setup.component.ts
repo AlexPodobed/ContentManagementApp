@@ -15,11 +15,11 @@ export class CustomTooltipSetupComponent {
     @Input() public imageUrl: string;
     @Input() public tooltip: Tooltip;
 
-    public pointerCoords: Coordinates = { x: 0, y: 0 };
+    public pointerCoords: Coordinates = {x: 0, y: 0};
 
     addPointer(e): void {
         this.pointerCoords.x = e.offsetX;
         this.pointerCoords.y = e.offsetY;
-        console.log(this.pointerCoords)
+        console.log(this.pointerCoords);
     }
 }

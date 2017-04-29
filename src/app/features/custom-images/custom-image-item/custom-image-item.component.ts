@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CustomImage } from '../shared';
 
 @Component({
@@ -7,15 +7,17 @@ import { CustomImage } from '../shared';
     styles: [require('./custom-image-item.component.scss')],
     templateUrl: './custom-image-item.component.html'
 })
-export class CustomImageItemComponent implements OnInit {
+export class CustomImageItemComponent {
     @Input() public item: CustomImage;
-    @Output() public onRemoved = new EventEmitter<CustomImage>();
+    @Output() public onRemove = new EventEmitter<CustomImage>();
 
-    ngOnInit(): void {
-        console.log(this.item);
-    }
+    public showTooltip: boolean = false;
 
     public remove(): void {
-        this.onRemoved.emit(this.item);
+        this.onRemove.emit(this.item);
+    }
+
+    public toggleTooltip(): void {
+        this.showTooltip = !this.showTooltip;
     }
 }

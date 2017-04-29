@@ -1,59 +1,88 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Tooltip, CustomImage } from '../shared';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+
+import { CustomImage, CustomImageService } from '../shared';
+import { LoaderBlockService } from '../../../core/services';
 
 @Component({
     selector: 'custom-image-form',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './custom-image-form.component.html'
 })
-export class CustomImageFormComponent implements OnInit {
-
-    public activeTab: string = 'image';
-    public tabs: string[] = ['image', 'tooltip'];
-    public imageUrl: string = 'http://forex.info/wp-content/uploads/2015/05/gallaxy-187788133-667x400.jpg';
-
+export class CustomImageFormComponent implements OnInit, OnDestroy {
+    private subscriptions: Subscription[] = [];
     public customImage: CustomImage;
+    public routeParams: any = {};
+    public isNewStrategy: boolean;
 
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private customImageService: CustomImageService,
+                private loaderBlockService: LoaderBlockService,
+                private cd: ChangeDetectorRef,
+                private route: ActivatedRoute,
+                private router: Router) {
     }
 
     ngOnInit(): void {
-        this.customImage = {
-            src: this.imageUrl,
-            tooltip: {
-                text: 'hello world',
-                position: {
-                    x: 0,
-                    y: 0
-                }
-            }
-        };
+        this.subscriptions.push(
+            this.route.params
+                .flatMap((data) => {
+                    this.routeParams.id = data['id'];
+                    this.isNewStrategy = !data['id'];
+                    return this.isNewStrategy
+                        ? this.customImageService.getEmptyModel()
+                        : this.fetchCustomImage(this.routeParams.id);
+                })
+                .subscribe((imageModel: CustomImage) => {
+                    this.customImage = imageModel;
+                    this.cd.markForCheck();
+                })
+        );
     }
 
-    cancel(): void {
-        console.log('canceled');
+    ngOnDestroy(): void {
+        this.subscriptions.map((sub) => sub.unsubscribe());
     }
 
-    save(e): void {
-        e.preventDefault();
-
-        console.log('saved');
+    private fetchCustomImage(id: string): Observable<CustomImage> {
+        this.loaderBlockService.show();
+        return this.customImageService.get(id)
+            .do((imageModel: CustomImage) => this.loaderBlockService.hide());
     }
 
-    goToTooltipSetup(url) {
-        console.log(url);
-        this.imageUrl = url;
-        this.setActiveTab('tooltip');
+    public cancel(): void {
+        this.router.navigate(['/custom-images']);
     }
 
-    setActiveTab(tab: string): void {
-        this.activeTab = tab;
+    public onSaveSuccess(): void {
+        this.loaderBlockService.hide();
+        this.router.navigate(['/custom-images']);
     }
 
-    addPointer(e): void {
+    public save(): void {
+        let saveMethod = this.isNewStrategy ? 'save' : 'update';
+        this.loaderBlockService.show();
+
+        this.subscriptions.push(
+            this.customImageService[saveMethod](this.customImage)
+                .do(() => this.onSaveSuccess())
+                .subscribe()
+        );
+    }
+
+    public updateImageSrc(url: string): void {
+        this.customImage.src = url;
+    }
+
+    public changeTooltipPosition(e): void {
         this.customImage.tooltip.position = {
             x: e.offsetX,
             y: e.offsetY
         };
+    }
+
+    isDisabled(): boolean {
+        return !Boolean(this.customImage.src) || !Boolean(this.customImage.tooltip.text);
     }
 }
